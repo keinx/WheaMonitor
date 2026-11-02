@@ -1,0 +1,604 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="#1F1F1F"
+      UseLayoutRounding="True"
+      TextOptions.TextFormattingMode="Display"
+      TextOptions.TextRenderingMode="ClearType">
+
+  <Grid.Resources>
+    <FontFamily x:Key="UiText">Segoe UI Variable Text</FontFamily>
+    <FontFamily x:Key="UiDisplay">Segoe UI Variable Display</FontFamily>
+    <FontFamily x:Key="IconFont">Segoe Fluent Icons</FontFamily>
+
+    <SolidColorBrush x:Key="TextPrimary" Color="#F3F3F3" />
+    <SolidColorBrush x:Key="TextSecondary" Color="#A6A6A6" />
+    <SolidColorBrush x:Key="TextMuted" Color="#808080" />
+    <SolidColorBrush x:Key="AccentBrush" Color="#60CDFF" />
+    <SolidColorBrush x:Key="PanelBrush" Color="#272727" />
+    <SolidColorBrush x:Key="PanelBorderBrush" Color="#353535" />
+
+    <Style x:Key="CaptionButtonStyle" TargetType="Button">
+      <Setter Property="Width" Value="46" />
+      <Setter Property="Height" Value="48" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#EAEAEA" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="FontFamily" Value="{StaticResource IconFont}" />
+      <Setter Property="FontSize" Value="10" />
+      <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="Bg" Background="{TemplateBinding Background}">
+              <ContentPresenter HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="False" />
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Background" Value="#343434" />
+        </Trigger>
+        <Trigger Property="IsPressed" Value="True">
+          <Setter Property="Background" Value="#404040" />
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+
+    <Style x:Key="CloseButtonStyle" TargetType="Button">
+      <Setter Property="Width" Value="46" />
+      <Setter Property="Height" Value="48" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#EAEAEA" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="FontFamily" Value="{StaticResource IconFont}" />
+      <Setter Property="FontSize" Value="10" />
+      <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="Bg" Background="{TemplateBinding Background}">
+              <ContentPresenter HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="False" />
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Bg" Property="Background" Value="#C42B1C" />
+                <Setter Property="Foreground" Value="#FFFFFF" />
+              </Trigger>
+              <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="Bg" Property="Background" Value="#A5261A" />
+                <Setter Property="Foreground" Value="#FFFFFF" />
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="PanelLabelStyle" TargetType="TextBlock">
+      <Setter Property="FontFamily" Value="{StaticResource UiText}" />
+      <Setter Property="FontSize" Value="11" />
+      <Setter Property="Foreground" Value="{StaticResource TextMuted}" />
+    </Style>
+
+    <Style x:Key="DetailLabelStyle" TargetType="TextBlock">
+      <Setter Property="FontFamily" Value="{StaticResource UiText}" />
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="DetailValueStyle" TargetType="TextBlock">
+      <Setter Property="FontFamily" Value="{StaticResource UiText}" />
+      <Setter Property="FontSize" Value="12.5" />
+      <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="FooterLabelStyle" TargetType="TextBlock">
+      <Setter Property="FontFamily" Value="{StaticResource UiText}" />
+      <Setter Property="FontSize" Value="10.5" />
+      <Setter Property="Foreground" Value="{StaticResource TextMuted}" />
+    </Style>
+
+    <Style x:Key="FooterValueStyle" TargetType="TextBlock">
+      <Setter Property="FontFamily" Value="{StaticResource UiText}" />
+      <Setter Property="FontSize" Value="12.5" />
+      <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+      <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+
+    <Style x:Key="ChartRangeStyle" TargetType="RadioButton">
+      <Setter Property="FontFamily" Value="{StaticResource UiText}" />
+      <Setter Property="FontSize" Value="10.5" />
+      <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="RadioButton">
+            <Border x:Name="Bg"
+                    Background="Transparent"
+                    CornerRadius="4"
+                    Padding="8,4"
+                    Margin="1,0">
+              <ContentPresenter HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="False" />
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Bg" Property="Background" Value="#343434" />
+              </Trigger>
+              <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="Bg" Property="Background" Value="#3D3D3D" />
+                <Setter Property="Foreground" Value="#F3F3F3" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Grid.Resources>
+
+  <Grid.RowDefinitions>
+    <RowDefinition Height="48" />
+    <RowDefinition Height="*" />
+  </Grid.RowDefinitions>
+
+  <!-- Custom title bar -->
+  <Border Grid.Row="0"
+          Background="#1F1F1F"
+          BorderBrush="#2C2C2C"
+          BorderThickness="0,0,0,1">
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <StackPanel Grid.Column="0"
+                  Orientation="Horizontal"
+                  VerticalAlignment="Center"
+                  Margin="18,0,0,0">
+        <Border Width="20" Height="20" CornerRadius="5">
+          <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+              <GradientStop Color="#72D7FF" Offset="0" />
+              <GradientStop Color="#0F6CBD" Offset="1" />
+            </LinearGradientBrush>
+          </Border.Background>
+          <Viewbox Margin="4">
+            <Path Data="M1,6 L4,6 L5.5,2 L8,10 L9.5,5 L11,6 L12,6"
+                  Stroke="#FFFFFF"
+                  StrokeThickness="1.4"
+                  StrokeStartLineCap="Round"
+                  StrokeEndLineCap="Round"
+                  StrokeLineJoin="Round"
+                  Fill="Transparent" />
+          </Viewbox>
+        </Border>
+        <TextBlock Text="WHEA 监视器"
+                   Margin="10,0,0,0"
+                   VerticalAlignment="Center"
+                   FontFamily="{StaticResource UiText}"
+                   FontSize="12.5"
+                   Foreground="#DEDEDE" />
+      </StackPanel>
+
+      <StackPanel Grid.Column="1" Orientation="Horizontal">
+        <Button x:Name="MinimizeButton"
+                Style="{StaticResource CaptionButtonStyle}"
+                Content="&#xE921;"
+                ToolTip="最小化" />
+        <Button x:Name="MaximizeButton"
+                Style="{StaticResource CaptionButtonStyle}"
+                Content="&#xE922;"
+                ToolTip="最大化" />
+        <Button x:Name="CloseButton"
+                Style="{StaticResource CloseButtonStyle}"
+                Content="&#xE8BB;"
+                ToolTip="关闭" />
+      </StackPanel>
+    </Grid>
+  </Border>
+
+  <!-- Navigation rail + content -->
+  <Grid Grid.Row="1">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="60" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <Border Grid.Column="0"
+            Background="#242424"
+            BorderBrush="#303030"
+            BorderThickness="0,0,1,0">
+      <Grid>
+        <Border Width="3"
+                Height="22"
+                Background="{StaticResource AccentBrush}"
+                CornerRadius="1.5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="0,27,0,0" />
+        <Border Width="40"
+                Height="40"
+                Background="#2E2E2E"
+                CornerRadius="8"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="0,18,0,0"
+                ToolTip="WHEA 错误监视">
+          <Viewbox Width="23" Height="23">
+            <Path Data="M2,12 L6,12 L8,6 L11,19 L14,9 L16,12 L22,12"
+                  Stroke="{StaticResource AccentBrush}"
+                  StrokeThickness="1.8"
+                  StrokeStartLineCap="Round"
+                  StrokeEndLineCap="Round"
+                  StrokeLineJoin="Round"
+                  Fill="Transparent" />
+          </Viewbox>
+        </Border>
+      </Grid>
+    </Border>
+
+    <Grid Grid.Column="1" Margin="28,20,28,22">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="16" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="16" />
+        <RowDefinition Height="96" />
+        <RowDefinition Height="8" />
+        <RowDefinition Height="42" />
+      </Grid.RowDefinitions>
+
+      <!-- Header -->
+      <Grid Grid.Row="0">
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
+          <TextBlock Text="WHEA 错误"
+                     FontFamily="{StaticResource UiDisplay}"
+                     FontSize="27"
+                     FontWeight="SemiBold"
+                     Foreground="{StaticResource TextPrimary}" />
+          <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+            <TextBlock Text="实时硬件错误监视"
+                       FontFamily="{StaticResource UiText}"
+                       FontSize="11.5"
+                       Foreground="{StaticResource TextSecondary}" />
+            <TextBlock Text="  ·  "
+                       FontFamily="{StaticResource UiText}"
+                       FontSize="11.5"
+                       Foreground="#5E5E5E" />
+            <TextBlock Text="Microsoft-Windows-WHEA-Logger"
+                       FontFamily="{StaticResource UiText}"
+                       FontSize="11.5"
+                       Foreground="{StaticResource TextMuted}" />
+          </StackPanel>
+        </StackPanel>
+
+        <Border x:Name="LivePill"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Background="#1B3327"
+                BorderBrush="#2E5B40"
+                BorderThickness="1"
+                CornerRadius="15"
+                Padding="11,5,12,6">
+          <StackPanel Orientation="Horizontal">
+            <Ellipse x:Name="LiveDot"
+                     Width="6"
+                     Height="6"
+                     Fill="#6CCB5F"
+                     VerticalAlignment="Center" />
+            <TextBlock x:Name="LiveText"
+                       Text="正在监视"
+                       Margin="7,0,0,0"
+                       FontFamily="{StaticResource UiText}"
+                       FontSize="11.5"
+                       Foreground="#BCE9B7" />
+          </StackPanel>
+        </Border>
+      </Grid>
+
+      <!-- Graph + details -->
+      <Grid Grid.Row="2">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="16" />
+          <ColumnDefinition Width="244" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0"
+                Background="{StaticResource PanelBrush}"
+                BorderBrush="{StaticResource PanelBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="20,16,20,12">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="8" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <TextBlock Grid.Column="0"
+                         Text="错误频率"
+                         VerticalAlignment="Center"
+                         FontFamily="{StaticResource UiText}"
+                         FontSize="12.5"
+                         FontWeight="SemiBold"
+                         Foreground="#D8D8D8" />
+
+              <TextBlock x:Name="ChartSubtitle"
+                         Grid.Column="1"
+                         Text="最近 60 分钟 · 每分钟事件数 · 悬停查看"
+                         Margin="12,1,0,0"
+                         VerticalAlignment="Center"
+                         FontFamily="{StaticResource UiText}"
+                         FontSize="11"
+                         Foreground="{StaticResource TextMuted}"
+                         TextWrapping="NoWrap"
+                         TextTrimming="CharacterEllipsis" />
+
+              <Border Grid.Column="2"
+                      Margin="12,0,0,0"
+                      Padding="2"
+                      VerticalAlignment="Center"
+                      Background="#2C2C2C"
+                      BorderBrush="#383838"
+                      BorderThickness="1"
+                      CornerRadius="6">
+                <StackPanel Orientation="Horizontal">
+                  <RadioButton x:Name="Range5Button"
+                               Content="5 分钟"
+                               GroupName="ChartRange"
+                               Style="{StaticResource ChartRangeStyle}" />
+                  <RadioButton x:Name="Range60Button"
+                               Content="60 分钟"
+                               GroupName="ChartRange"
+                               IsChecked="True"
+                               Style="{StaticResource ChartRangeStyle}" />
+                  <RadioButton x:Name="Range6HButton"
+                               Content="6 小时"
+                               GroupName="ChartRange"
+                               Style="{StaticResource ChartRangeStyle}" />
+                </StackPanel>
+              </Border>
+
+              <TextBlock x:Name="ChartCurrentText"
+                         Grid.Column="3"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Center"
+                         Margin="12,0,0,0"
+                         FontFamily="{StaticResource UiText}"
+                         FontSize="11"
+                         Foreground="{StaticResource TextSecondary}"
+                         Text="本分钟 0 次" />
+            </Grid>
+
+            <Grid x:Name="ChartHost" Grid.Row="2" />
+          </Grid>
+        </Border>
+
+        <Border Grid.Column="2"
+                Background="{StaticResource PanelBrush}"
+                BorderBrush="{StaticResource PanelBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="20,18,20,16">
+          <StackPanel>
+            <TextBlock Text="当前错误率"
+                       Style="{StaticResource PanelLabelStyle}" />
+
+            <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+              <TextBlock x:Name="PerMinuteValue"
+                         Text="0"
+                         FontFamily="{StaticResource UiDisplay}"
+                         FontSize="41"
+                         FontWeight="SemiBold"
+                         Foreground="{StaticResource AccentBrush}" />
+              <TextBlock Text="次/分钟"
+                         Margin="6,0,0,8"
+                         VerticalAlignment="Bottom"
+                         FontFamily="{StaticResource UiText}"
+                         FontSize="11"
+                         Foreground="{StaticResource TextSecondary}" />
+            </StackPanel>
+
+            <TextBlock Text="最近 1 分钟"
+                       Margin="0,1,0,0"
+                       Style="{StaticResource PanelLabelStyle}" />
+
+            <Border Height="1"
+                    Background="#393939"
+                    Margin="0,15,0,12" />
+
+            <Grid Height="27">
+              <TextBlock x:Name="TotalRangeLabel"
+                         Text="最近 60 分钟"
+                         Style="{StaticResource DetailLabelStyle}" />
+              <TextBlock x:Name="TotalValue" Text="0 次" Style="{StaticResource DetailValueStyle}" />
+            </Grid>
+            <Grid Height="27">
+              <TextBlock Text="已更正" Style="{StaticResource DetailLabelStyle}" />
+              <TextBlock x:Name="CorrectedValue" Text="0" Style="{StaticResource DetailValueStyle}" />
+            </Grid>
+            <Grid Height="27">
+              <TextBlock Text="严重错误" Style="{StaticResource DetailLabelStyle}" />
+              <TextBlock x:Name="SevereValue" Text="0" Style="{StaticResource DetailValueStyle}" />
+            </Grid>
+
+            <Border Height="1"
+                    Background="#393939"
+                    Margin="0,9,0,10" />
+
+            <Grid Height="27">
+              <TextBlock Text="最近一次" Style="{StaticResource DetailLabelStyle}" />
+              <TextBlock x:Name="LastTimeValue" Text="—" Style="{StaticResource DetailValueStyle}" />
+            </Grid>
+            <Grid Height="27">
+              <TextBlock Text="最新事件" Style="{StaticResource DetailLabelStyle}" />
+              <TextBlock x:Name="LastEventValue" Text="—" Style="{StaticResource DetailValueStyle}" />
+            </Grid>
+          </StackPanel>
+        </Border>
+      </Grid>
+
+      <!-- Bottom summary strip -->
+      <Border Grid.Row="4"
+              Background="{StaticResource PanelBrush}"
+              BorderBrush="{StaticResource PanelBorderBrush}"
+              BorderThickness="1"
+              CornerRadius="8">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.15*" />
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="1.05*" />
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="2.05*" />
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="1.42*" />
+          </Grid.ColumnDefinitions>
+
+          <Grid Grid.Column="0" Margin="22,13,18,12">
+            <StackPanel VerticalAlignment="Center">
+              <TextBlock Text="监视状态" Style="{StaticResource FooterLabelStyle}" />
+              <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Ellipse x:Name="FooterStatusDot"
+                         Width="6"
+                         Height="6"
+                         Fill="#6CCB5F"
+                         VerticalAlignment="Center" />
+                <TextBlock x:Name="FooterStatus"
+                           Text="正在监视"
+                           Margin="7,0,0,0"
+                           Style="{StaticResource FooterValueStyle}" />
+              </StackPanel>
+            </StackPanel>
+          </Grid>
+
+          <Rectangle Grid.Column="1" Fill="#383838" Margin="0,14" />
+
+          <Grid Grid.Column="2" Margin="20,13,18,12">
+            <StackPanel VerticalAlignment="Center">
+              <TextBlock Text="数据源" Style="{StaticResource FooterLabelStyle}" />
+              <TextBlock Text="系统事件日志"
+                         Margin="0,5,0,0"
+                         Style="{StaticResource FooterValueStyle}" />
+            </StackPanel>
+          </Grid>
+
+          <Rectangle Grid.Column="3" Fill="#383838" Margin="0,14" />
+
+          <Grid Grid.Column="4" Margin="20,13,18,12">
+            <StackPanel VerticalAlignment="Center">
+              <TextBlock Text="事件提供程序" Style="{StaticResource FooterLabelStyle}" />
+              <TextBlock Text="Microsoft-Windows-WHEA-Logger"
+                         Margin="0,5,0,0"
+                         FontFamily="{StaticResource UiText}"
+                         FontSize="11.5"
+                         Foreground="{StaticResource TextPrimary}"
+                         TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+          </Grid>
+
+          <Rectangle Grid.Column="5" Fill="#383838" Margin="0,14" />
+
+          <Grid Grid.Column="6" Margin="20,13,22,12">
+            <StackPanel VerticalAlignment="Center">
+              <TextBlock Text="最新事件" Style="{StaticResource FooterLabelStyle}" />
+              <TextBlock x:Name="FooterLast"
+                         Text="—"
+                         Margin="0,5,0,0"
+                         Style="{StaticResource FooterValueStyle}" />
+            </StackPanel>
+          </Grid>
+        </Grid>
+      </Border>
+
+      <!-- Latest detailed event ticker -->
+      <Border Grid.Row="6"
+              Background="{StaticResource PanelBrush}"
+              BorderBrush="{StaticResource PanelBorderBrush}"
+              BorderThickness="1"
+              CornerRadius="8">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <StackPanel Grid.Column="0"
+                      Orientation="Horizontal"
+                      VerticalAlignment="Center"
+                      Margin="20,0,14,0">
+            <Ellipse Width="4"
+                     Height="4"
+                     Fill="{StaticResource AccentBrush}"
+                     VerticalAlignment="Center" />
+            <TextBlock Text="最新详情"
+                       Margin="8,0,0,0"
+                       FontFamily="{StaticResource UiText}"
+                       FontSize="10.5"
+                       Foreground="{StaticResource TextMuted}" />
+            <Border x:Name="DetailLevelPill"
+                    Margin="9,0,0,0"
+                    Padding="7,2,7,2"
+                    CornerRadius="9"
+                    Background="#2F2F2F"
+                    BorderBrush="#444444"
+                    BorderThickness="1">
+              <TextBlock x:Name="DetailLevelText"
+                         Text="—"
+                         FontFamily="{StaticResource UiText}"
+                         FontSize="9.5"
+                         Foreground="#B8B8B8" />
+            </Border>
+          </StackPanel>
+
+          <Rectangle Grid.Column="1" Fill="#383838" Margin="0,11" />
+
+          <Grid Grid.Column="2" ClipToBounds="True">
+            <ScrollViewer x:Name="DetailScroller"
+                          HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Disabled"
+                          HorizontalContentAlignment="Left"
+                          VerticalContentAlignment="Center"
+                          VerticalAlignment="Center"
+                          Focusable="False"
+                          Margin="16,0,16,0">
+              <TextBlock x:Name="DetailTickerText"
+                         Text="正在读取最新 WHEA 详细信息…"
+                         FontFamily="{StaticResource UiText}"
+                         FontSize="11.5"
+                         Foreground="#D2D2D2"
+                         TextWrapping="NoWrap"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center" />
+            </ScrollViewer>
+          </Grid>
+        </Grid>
+      </Border>
+    </Grid>
+  </Grid>
+</Grid>
